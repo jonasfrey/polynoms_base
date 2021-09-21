@@ -1,0 +1,751 @@
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="module" src="https://cdn.space.unibe.ch/JsonToHtml.js"></script>
+
+<script src="https://cdn.space.unibe.ch/Fontawesome.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+
+<div id="app">
+
+
+</div>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+    }
+    body{
+        font-size: 2rem;
+        background:#333;
+        background: url(data:image/gif;base64,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) rgb(41, 41, 41);
+        color:#eee;
+        min-width: 100vw;
+        min-height: 100vh;
+    }
+    h1,h2,h3,h4,h5,h6, input{
+        color:#eee !important;
+    }
+    input{
+        background:#333 !important;
+        border-color: rgba(238, 238, 238, 0.459) !important;
+    }
+    #app{
+        width:100%;
+        height: 100%;
+        image-rendering: pixelated;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .content{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    canvas{
+        position: fixed;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .inputs{
+        background: rgba(0,0,0.8);
+        position: fixed;
+        z-index: 1;
+    }
+    .content{
+        width:80%;
+
+    }
+    .polynoms, .result{
+        width: 100%;
+    }
+    .polynom {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+    .result{
+        position: relative;
+    }
+    .result_n_target {
+        position: absolute;
+        right: 0;
+        transform: translate(100%, 0);
+    }
+    .result_n_target.success{
+        color: greenyellow !important; 
+    }
+    .result_n_target.error{
+        color: red !important;
+    }
+    .random_target_number_in_decimal {
+        text-align: right;
+    }
+    .summand{
+        width: 12.5% !important;
+        display:flex; 
+        flex-direction: row;
+        JUSTIFY-CONTENT: SPACE-AROUND;
+    }
+    .coefficient{
+        block-size: auto;
+        text-align: center;
+        padding:0rem !important;
+        font-size: 2rem;
+        width:5rem;
+    }
+    .base_exponent {
+        display: flex;
+    }
+    input:read-only{
+        background-color: transparent !important;
+        color: white; 
+        border-radius: 0px;
+        border: 0px transparent;
+        outline: none;
+    }
+    input.hidden{
+        background-color: transparent !important;
+    }
+    .base {
+        color: red;
+    }
+
+    sup.exponent {
+        color: yellow;
+    }
+
+    .base_exponent_product {
+        color: orange;
+    }
+
+    input.input.coefficient {
+        color: lightgreen !important;
+    }
+    .v_hidden{
+        visibility: hidden;
+    }
+    .coefficients_only{
+        margin-top: 2rem;
+    }
+</style>
+
+<script type="text/javascript">
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        document.getElementById("app").append(
+            jth.parse(
+                {
+                    t:"div",
+                    class: "content", 
+                    c: [
+                        
+                        {
+                            "class": "polynoms", 
+                            c: [
+                                {
+                                "class": "polynom",
+                                    c: [
+                                        {
+                                            "class": "summand", 
+                                            "v-for": "(value, key) in polynom.coefficients", 
+                                            c: [
+                                                {
+                                                    c: [
+                                                        {
+                                                            "t": "input", 
+                                                            "class": "input coefficient", 
+                                                            ":type": "value.input.type", 
+                                                            ":min": "value.input.min",
+                                                            ":max": "value.input.max",
+                                                            "v-model": "value.value",
+                                                        },
+                                                    ]
+                                                },
+                                                {
+                                                    c: [
+                                                        {
+                                                            "class": "multiplier", 
+                                                            "c": "*"
+                                                        }, 
+                                                    ]
+                                                }, 
+                                                {
+                                                    class:"base_exponent",
+                                                    c: [
+                                                        {
+                                                            "class": "base", 
+                                                            "v-html": "polynom.base"
+                                                        }, 
+                                                        {
+                                                            "class": "exponent", 
+                                                            "t": "sup", 
+                                                            "v-html": "value.exponent"
+                                                        }, 
+                                                    ]
+                                                },
+                                                {
+                                                    c: [
+                                                        {
+                                                            "v-if": "value.exponent != 0",
+                                                            "class": "plus", 
+                                                            "c": "+"
+                                                        }, 
+                                                    ]
+                                                }
+            
+                                            ]
+                                        },
+            
+                                    ] 
+                                },
+                                {
+                                "class": "polynom",
+                                    c: [
+                                        {
+                                            "class": "summand", 
+                                            "v-for": "(value, key) in polynom.coefficients", 
+                                            c: [
+                                                {
+                                                    c: [
+                                                        {
+                                                            "t": "input", 
+                                                            "readonly": "true", 
+                                                            "class": "input coefficient", 
+                                                            ":type": "value.input.type", 
+                                                            ":min": "value.input.min",
+                                                            ":min": "value.input.max",
+                                                            ":value": "value.value",
+                                                        },
+                                                    ]
+                                                },
+                                                {
+                                                    c: [
+                                                        {
+                                                            "class": "multiplier", 
+                                                            "c": "*"
+                                                        }, 
+                                                    ]
+                                                }, 
+                                                {
+                                                    class:"base_exponent",
+                                                    c: [
+                                                        {
+                                                            "class": "base_exponent_product", 
+                                                            "v-html": "Math.pow(polynom.base, value.exponent)"
+                                                        }, 
+                                                    ]
+                                                },
+                                                {
+                                                    c: [
+                                                        {
+                                                            "v-if": "value.exponent != 0",
+                                                            "class": "plus", 
+                                                            "c": "+"
+                                                        }, 
+                                                    ]
+                                                }
+            
+                                            ]
+                                        },
+            
+                                    ] 
+                                },
+                                {
+                                "class": "polynom",
+                                    c: [
+                                        {
+                                            "class": "summand", 
+                                            "v-for": "(value, key) in polynom.coefficients", 
+                                            c: [
+                                                {
+                                                    c: [
+                                                        {
+                                                            "t": "input", 
+                                                            "readonly": "true", 
+                                                            "class": "input coefficient hidden", 
+                                                        },
+                                                    ]
+                                                },
+            
+                                                {
+                                                    class:"base_exponent",
+                                                    c: [
+                                                        {
+                                                            "class": "base_exponent_product", 
+                                                            "v-html": "value.value * Math.pow(polynom.base, value.exponent)"
+                                                        }, 
+                                                    ]
+                                                },
+                                                {
+                                                    c: [
+                                                        {
+                                                            "v-if": "value.exponent != 0",
+                                                            "class": "plus", 
+                                                            "c": "+"
+                                                        }, 
+                                                    ]
+                                                }
+            
+                                            ]
+                                        },
+            
+                                    ] 
+                                },
+                                {
+                                "class": "polynom coefficients_only",
+                                    c: [
+                                        {
+                                            "class": "summand", 
+                                            "v-for": "(value, key) in polynom.coefficients", 
+                                            c: [
+                                                {
+                                                    c: [
+                                                        {
+                                                            "t": "input", 
+                                                            "class": "input coefficient", 
+                                                            ":type": "value.input.type", 
+                                                            ":min": "value.input.min",
+                                                            ":max": "value.input.max",
+                                                            "v-model": "value.value",
+                                                        },
+                                                    ]
+                                                },
+                                                {
+                                                    class: "v_hidden",
+
+                                                    c: [
+                                                        {
+                                                            "class": "multiplier", 
+                                                            "c": "*"
+                                                        }, 
+                                                    ]
+                                                }, 
+                                                {
+                                                    class:"base_exponent v_hidden",
+                                                    c: [
+                                                        {
+                                                            "class": "base", 
+                                                            "v-html": "polynom.base"
+                                                        }, 
+                                                        {
+                                                            "class": "exponent", 
+                                                            "t": "sup", 
+                                                            "v-html": "value.exponent"
+                                                        }, 
+                                                    ]
+                                                },
+                                                {
+                                                    class: "v_hidden",
+                                                    c: [
+                                                        {
+                                                            "v-if": "value.exponent != 0",
+                                                            "class": "plus", 
+                                                            "c": "+"
+                                                        }, 
+                                                    ]
+                                                }
+            
+                                            ]
+                                        },
+            
+                                    ] 
+                                },
+                                
+                            ]
+                        }, 
+                        {
+                            "class": "result", 
+                            c: [
+                                {
+                                    "class": "result_n_target", 
+                                    ":class": "(random_target_number_in_decimal == polynom.result) ? 'success' : 'error'", 
+                                    c: [
+                                        {
+                                            "class": "polynom_result", 
+                                            "v-html": "'=>'+polynom.result",
+                                        }, 
+                                        {
+                                            "class": "random_target_number_in_decimal", 
+                                            
+                                            "v-html": "'target: ' +random_target_number_in_decimal" 
+                                        }
+                                    ]
+                                }
+                            ]
+                        }, 
+                        
+                    ]
+                }, 
+            )
+        );
+
+
+            window.vueObject = new Vue({
+                el: '#app',
+                data: {
+                    development: true, 
+                    bool: false, 
+                    max_random_polynom_base: 16,
+                    max_random_polynom_degree: 16, 
+                    polynom: {
+                        result: 0, 
+                        degree: 8, 
+                        base: 2, 
+                        coefficients: [
+
+                            {
+                                exponent: 7, 
+
+                                value: 0, 
+                                input: {
+
+                                    min: 0, 
+                                    max: 1, 
+                                    type:"number", 
+                                }
+                            },
+                            {
+                                exponent: 6, 
+
+                                value: 0, 
+                                input: {
+
+                                    min: 0, 
+                                    max: 1, 
+                                    type:"number", 
+                                }
+                            },
+                            {
+                                exponent: 5, 
+
+                                value: 0, 
+                                input: {
+
+                                    min: 0, 
+                                    max: 1, 
+                                    type:"number", 
+                                }
+                            },
+                            {
+                                exponent: 4, 
+
+                                value: 0, 
+                                input: {
+
+                                    min: 0, 
+                                    max: 1, 
+                                    type:"number", 
+                                }
+                            },
+                            {
+                                exponent: 3, 
+
+                                value: 0, 
+                                input: {
+
+                                    min: 0, 
+                                    max: 1, 
+                                    type:"number", 
+                                }
+                            },
+                            {
+                                exponent: 2, 
+
+                                value: 0, 
+                                input: {
+
+                                    min: 0, 
+                                    max: 1, 
+                                    type:"number", 
+                                }
+                            },
+                            {
+                                exponent: 1, 
+
+                                value: 0, 
+                                input: {
+
+                                    min: 0, 
+                                    max: 1, 
+                                    type:"number", 
+                                }
+                            },
+                            {
+                                exponent: 0, 
+
+                                value: 0, 
+                                input: {
+
+                                    min: 0, 
+                                    max: 1, 
+                                    type:"number", 
+                                }
+                            },
+                        ]
+                    },  
+                    random_target_number_in_decimal: 243, 
+
+                    arr: [
+                        {
+                            "val": 1,
+                        },
+                        {
+                            "val": 2,
+                        },
+                        {
+                            "val": 3,
+                        },
+                        {
+                            "val": 4,
+                        }
+                    ],
+                    url_b64_separator: "#",
+                    url_b64_prop: "b64_json", 
+                    url_b64_assignment_character: "=", 
+                    undo_redo_used : false, 
+                    data_to_b64_ignore_props: [
+                        "gl", 
+                        "overlay_canvas", 
+                        "image", 
+                        "data_history",
+                        "data_history_index",
+                        "uniform4fv_rgba_intensity_location", 
+                        "reset_history"
+                    ], 
+                    reset_history: false, 
+                    data_history: [
+
+                    ],
+                    data_history_index: 0, 
+                    data_change : false, 
+
+                },
+                updated: function(){
+
+                    console.log("updated");
+
+                    var self = this;
+
+                    self.data_change = true;
+
+                    self.write_b64_to_url();
+                                    
+                },
+                mounted: function () {
+
+                    var self = this;
+
+                    this.read_b64_from_url();
+
+                    //add first b64 to history
+                    this.reset_or_update_history_if_data_change();
+
+                    console.warn("!IMPORTANT: you are using write_b64_to_url, please set .development to true, to prevent unexpected behaviour in development, since vue _data will be stored and loaded from url")
+                    
+                    self.new_random();
+
+
+
+                    window.onmouseup = function(){
+                        //console.log(self.data_change);
+                        self.reset_or_update_history_if_data_change();
+                    }
+                    window.onkeyup = function(){
+                        self.reset_or_update_history_if_data_change();
+                    }
+
+                    window.onkeyup = function(event) {
+
+                        // if ctrl + z
+                        if(event.ctrlKey && event.which == 90){
+                            // if ctrl + shift + z
+                            if(event.shiftKey){
+                                if(self.data_history_index < self.data_history.length-1){
+                                    self.data_history_index++;
+                                }
+                            }
+                            // if only ctrl + z
+                            if(!event.shiftKey){
+                                if(self.data_history.length > 1 && self.data_history_index > 0){
+                                    self.data_history_index--;
+                                }
+                            }
+
+                            self.undo_redo_used = true;
+                            var b64_string = self.data_history[self.data_history_index];
+                            var data = self.b64_to_data(b64_string);
+                            self.apply_data_copy_to_data(data);
+                            
+                        }
+                    }
+
+                },
+                watch: {
+                    "data": {
+                        handler: function(a,b,c,d){
+                            console.log(a,b,c,d);
+                        },
+                        deep: true, 
+                    },
+                    "polynom": {
+                        handler: function(a,b,c,d){
+                            var self = this; 
+                            self.polynom.result = self.get_polynom_result();
+                        },
+                        deep: true, 
+                    }
+                },
+                methods: {
+                    get_polynom_result: function (){
+                        var self = this; 
+                        var res = 0; 
+                        for(var key in self.polynom.coefficients){
+                            var coefficient = self.polynom.coefficients[key];
+                            res += coefficient.value * Math.pow(self.polynom.base, coefficient.exponent)
+                        }
+                        return res; 
+                    },
+                    new_random: function(){
+                        var self = this; 
+                        self.polynom = self.get_new_random_polynom();
+                
+                        self.random_target_number_in_decimal = self.get_random_target_number_in_decimal(self.polynom);
+                    },
+                    get_random_target_number_in_decimal : function(polynom){
+                        var random_target_number_in_decimal = parseInt( Math.random() * ((Math.pow(polynom.base, polynom.degree)*2)-1));
+                        return random_target_number_in_decimal
+                    },
+                    get_new_random_polynom: function(){
+                        var random_polynom = {};
+                        //random_polynom.degree = parseInt(Math.random()*self.max_random_polynom_base);
+                        //random_polynom.base = parseInt(Math.random()*self.max_random_polynom_base);
+                        random_polynom.degree = 7
+                        random_polynom.base = 2
+
+                        random_polynom.coefficients = [];
+                        for(var deg = random_polynom.degree; deg >= 0; deg--){
+                            var coefficient = {
+                                exponent: deg, 
+                                value : 0, 
+                                input: {
+                                    type: "number",
+                                    min : 0, 
+                                    max : random_polynom.base - 1, 
+                                    step: 1, 
+                                }
+                            }
+                            random_polynom.coefficients.push(coefficient)
+                        }
+                        
+                        return random_polynom; 
+                        
+                    },
+                    reset_or_update_history_if_data_change: function(){
+                        var self = this;
+                        
+                        // reset the history if user updated changes 'manually' (without using ctrl+z)
+                        if(!self.undo_redo_used){ 
+                            console.log("reset history");
+                            self.data_history = self.data_history.slice(0, self.data_history_index+1);
+                            self.undo_redo_used = false; 
+                        }
+
+                        if(self.data_change){
+                            
+                            window.setTimeout(function(){
+
+                                self.write_b64_to_history();
+                                self.data_change = false; 
+    
+                            },10);
+                        }
+                    }, 
+                    get_important_data_for_url: function(){
+
+                        let data_copy = Object.assign({}, this._data);
+                        for(var key in this.data_to_b64_ignore_props){
+                            var prop = this.data_to_b64_ignore_props[key];
+                            delete data_copy[prop];
+                        }
+
+                        return data_copy;
+
+                    },
+                    write_b64_to_history: function(){
+                        //for the history we can use full data object , not really working :(
+                        var data = this.get_important_data_for_url();
+                        var b64_string = this.data_to_b64(data);
+                        this.data_history.push(b64_string);
+                        this.data_history_index = parseInt(this.data_history.length -1);
+                        
+                        console.log("write_b64_to_history, history: ");
+                        console.log(this.data_history);
+                    },
+                    write_b64_to_url: function(){
+                        var data = this.get_important_data_for_url();
+                        var b64_string = this.data_to_b64(data);
+                        var parts = window.location.href.split(this.url_b64_separator);
+                        var clear_url = parts.shift();
+                        // !IMPORTANT , while developing and using write_b64_to_url, data will be loaded between site reloads which leads to unexpected behaviuours !!!, don't ever use write_b64_to_url in development
+                        if(!this.development){
+                            window.location.href = clear_url + this.url_b64_separator + this.url_b64_prop + this.url_b64_assignment_character + b64_string;
+                        }
+                    },
+                    read_b64_from_url: function(){
+                        var parts = window.location.href.split(this.url_b64_separator);
+                        var fragment = parts.pop();
+                        var parts = fragment.split(this.url_b64_prop + this.url_b64_assignment_character);
+                        //console.log(parts);
+
+                        if(parts.length == 1){
+                            return false;
+                        }
+                        var b64_string = parts.pop();
+                        var data = this.b64_to_data(b64_string);
+
+                        this.apply_data_copy_to_data(data);
+                    },
+                    data_to_b64: function(data){
+
+                        var data_copy_json = JSON.stringify(data);
+                        
+                        var data_copy_json_b64 = btoa((encodeURIComponent(data_copy_json)));
+
+                        return data_copy_json_b64;
+
+                    },
+                    b64_to_data : function(b64){
+                        var atobed = atob(b64);
+                        var data_json = decodeURIComponent(atobed);
+                        var data = JSON.parse(data_json);
+                        return data; 
+                    },
+                    apply_data_copy_to_data: function(data){
+                        for(var key in data){
+                            this[key] = data[key];
+                        }
+                        return true;
+                    }, 
+                    
+                    "test_method": function(){
+                        console.log("test");
+                    }, 
+                },
+                computed: {
+                    "test_computed": function(){
+                        return "test_computed"
+                    }
+                }
+            })
+        
+    });
+
+
+</script>
